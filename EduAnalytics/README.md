@@ -5,10 +5,11 @@ SCREENSHOT OF ADMIN PORTAL
 ![WhatsApp Image 2025-12-20 at 1 42 43 AM](https://github.com/user-attachments/assets/1b7bbbca-adbc-4087-be8d-1c7d08ab7058)
 
 SCREENSHOT OF STUDENT PORTAL
-![WhatsApp Image 2025-12-20 at 1 42 43 AM](https://github.com/user-attachments/assets/bebc5e89-d098-4af3-bde0-8ea669775706)
 ![WhatsApp Image 2025-12-20 at 1 52 19 AM](https://github.com/user-attachments/assets/32527e4c-d8c2-4589-b2c9-3474ed2201c8)
 ![WhatsApp Image 2025-12-20 at 1 54 29 AM](https://github.com/user-attachments/assets/b03ef9d5-b2cc-4ea8-a9b9-4b6c59ca083e)
 ![WhatsApp Image 2025-12-20 at 1 55 32 AM](https://github.com/user-attachments/assets/be7808f4-3cc4-4a6e-a6a3-426c1ca81b7a)
+![WhatsApp Image 2025-12-20 at 1 55 48 AM](https://github.com/user-attachments/assets/ca364cc6-74a0-415a-bb35-b7c3982d9c77)
+
 
 # EduAnalytics - Educational Analytics System
 
