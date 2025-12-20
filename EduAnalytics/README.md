@@ -1,7 +1,7 @@
 SCREENSHOT OF ADMIN PORTAL 
 <img width="1891" height="916" alt="Screenshot 2025-12-20 014012" src="https://github.com/user-attachments/assets/854387ad-640b-46e1-9722-45d74a388315" />
 ![WhatsApp Image 2025-12-20 at 1 41 44 AM](https://github.com/user-attachments/assets/698a6f31-0306-4233-8e6e-53891e52643a)
-![WhatsApp Image 2025-12-20 at 1 41 44 AM](https://github.com/user-attachments/assets/79be0d33-9945-4fd1-b8e9-3f59b7570980)
+![WhatsApp Image 2025-12-20 at 1 42 16 AM](https://github.com/user-attachments/assets/9db4bb73-49d3-49e4-8fec-4b0a8a97b47d)
 ![WhatsApp Image 2025-12-20 at 1 42 43 AM](https://github.com/user-attachments/assets/1b7bbbca-adbc-4087-be8d-1c7d08ab7058)
 
 SCREENSHOT OF STUDENT PORTAL
