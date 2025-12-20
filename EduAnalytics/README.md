@@ -1,3 +1,15 @@
+SCREENSHOT OF ADMIN PORTAL 
+<img width="1891" height="916" alt="Screenshot 2025-12-20 014012" src="https://github.com/user-attachments/assets/854387ad-640b-46e1-9722-45d74a388315" />
+![WhatsApp Image 2025-12-20 at 1 41 44 AM](https://github.com/user-attachments/assets/698a6f31-0306-4233-8e6e-53891e52643a)
+![WhatsApp Image 2025-12-20 at 1 41 44 AM](https://github.com/user-attachments/assets/79be0d33-9945-4fd1-b8e9-3f59b7570980)
+![WhatsApp Image 2025-12-20 at 1 42 43 AM](https://github.com/user-attachments/assets/1b7bbbca-adbc-4087-be8d-1c7d08ab7058)
+
+SCREENSHOT OF STUDENT PORTAL
+![WhatsApp Image 2025-12-20 at 1 42 43 AM](https://github.com/user-attachments/assets/bebc5e89-d098-4af3-bde0-8ea669775706)
+![WhatsApp Image 2025-12-20 at 1 52 19 AM](https://github.com/user-attachments/assets/32527e4c-d8c2-4589-b2c9-3474ed2201c8)
+![WhatsApp Image 2025-12-20 at 1 54 29 AM](https://github.com/user-attachments/assets/b03ef9d5-b2cc-4ea8-a9b9-4b6c59ca083e)
+![WhatsApp Image 2025-12-20 at 1 55 32 AM](https://github.com/user-attachments/assets/be7808f4-3cc4-4a6e-a6a3-426c1ca81b7a)
+
 # EduAnalytics - Educational Analytics System
 
 A full-stack web application for managing student academic performance with multi-batch support, real-time analytics, and comprehensive dashboard visualizations.
