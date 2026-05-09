@@ -1,16 +1,31 @@
+from pathlib import Path
+import sys
+
+# Allow running this file directly (python backend/app/main.py)
+# by ensuring the `backend` directory is on sys.path so `import app` works.
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routes import auth, student, admin, comparison, batch_subjects
 from app.db.database import init_db
+import logging
 
-# Initialize database tables on startup
-init_db()
+# Reduce SQLAlchemy verbosity (PRAGMA / raw SQL logs)
+logging.getLogger("sqlalchemy.engine").setLevel(logging.WARNING)
+logging.getLogger("sqlalchemy").setLevel(logging.WARNING)
 
 app = FastAPI(
     title="EduAnalytics API",
     description="Complete analytics platform for educational institutions",
     version="1.0.0"
 )
+
+
+@app.on_event("startup")
+def on_startup():
+    """Initialize resources on startup."""
+    init_db()
 
 # Add CORS middleware FIRST (before routers)
 app.add_middleware(

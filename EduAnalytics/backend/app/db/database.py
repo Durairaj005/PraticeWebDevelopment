@@ -15,17 +15,18 @@ logger = logging.getLogger(__name__)
 SQLALCHEMY_DATABASE_URL = settings.DATABASE_URL
 
 # Create engine with connection pooling
-# Use NullPool for SQLite, standard pooling for PostgreSQL
+# Use NullPool for SQLite, standard pooling for other RDBMS (MySQL/Postgres)
 if "sqlite" in SQLALCHEMY_DATABASE_URL:
+    # Disable SQLAlchemy echo to avoid noisy PRAGMA/raw SQL logs during normal runs.
     engine = create_engine(
         SQLALCHEMY_DATABASE_URL,
-        echo=settings.DEBUG,
+        echo=False,
         connect_args={"check_same_thread": False},
     )
 else:
     engine = create_engine(
         SQLALCHEMY_DATABASE_URL,
-        echo=settings.DEBUG,
+        echo=False,
         pool_pre_ping=True,
         pool_recycle=3600,
     )

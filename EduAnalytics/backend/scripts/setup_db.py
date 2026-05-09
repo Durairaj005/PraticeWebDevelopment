@@ -1,54 +1,46 @@
-﻿import psycopg2
-from psycopg2 import sql
+﻿import pymysql
+import os
+from dotenv import load_dotenv
 
-# PostgreSQL connection details
-HOST = "localhost"
-USER = "postgres"
-PASSWORD = "postgres"  # Change if you set a different password
-PORT = "5432"
+load_dotenv()
+
+# MySQL connection details (admin user) — can be provided via environment variables
+HOST = os.getenv("DB_HOST", "localhost")
+USER = os.getenv("DB_ADMIN_USER", "root")
+PASSWORD = os.getenv("DB_ADMIN_PASSWORD", "")  # Set this env var if root/admin has a password
+PORT = int(os.getenv("DB_PORT", 3306))
+
+DB_NAME = os.getenv("DB_NAME", "eduanalytics")
+APP_USER = os.getenv("DB_APP_USER", "eduanalytics_user")
+APP_PASS = os.getenv("DB_APP_PASS", "SecurePass123!")
 
 try:
-    # Connect to default postgres database
-    conn = psycopg2.connect(
-        host=HOST,
-        user=USER,
-        password=PASSWORD,
-        port=PORT,
-        database="postgres"
-    )
-    
+    # Connect to MySQL server
+    conn = pymysql.connect(host=HOST, user=USER, password=PASSWORD, port=PORT, autocommit=True)
     cursor = conn.cursor()
-    conn.autocommit = True  # Required for CREATE DATABASE
-    
-    print(" Connected to PostgreSQL")
-    
+
+    print(" Connected to MySQL server")
+
     # Create database
-    cursor.execute("CREATE DATABASE eduanalytics;")
-    print(" Database 'eduanalytics' created")
-    
-    # Create user
-    cursor.execute("CREATE USER eduanalytics_user WITH PASSWORD 'SecurePass123!';")
-    print(" User 'eduanalytics_user' created")
-    
-    # Grant privileges
-    cursor.execute("ALTER ROLE eduanalytics_user SET client_encoding TO 'utf8';")
-    cursor.execute("ALTER ROLE eduanalytics_user SET default_transaction_isolation TO 'read committed';")
-    cursor.execute("ALTER ROLE eduanalytics_user SET default_transaction_deferrable TO on;")
-    cursor.execute("GRANT ALL PRIVILEGES ON DATABASE eduanalytics TO eduanalytics_user;")
-    print(" Privileges granted to user")
-    
+    cursor.execute(f"CREATE DATABASE IF NOT EXISTS {DB_NAME} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;")
+    print(f" Database '{DB_NAME}' created or already exists")
+
+    # Create user and grant privileges
+    cursor.execute(f"CREATE USER IF NOT EXISTS '{APP_USER}'@'localhost' IDENTIFIED BY '{APP_PASS}';")
+    cursor.execute(f"GRANT ALL PRIVILEGES ON {DB_NAME}.* TO '{APP_USER}'@'localhost';")
+    cursor.execute("FLUSH PRIVILEGES;")
+    print(f" User '{APP_USER}' created/granted privileges")
+
     cursor.close()
     conn.close()
-    
+
     print("\n DATABASE SETUP COMPLETE!")
     print("\nCredentials:")
-    print("Username: eduanalytics_user")
-    print("Password: SecurePass123!")
-    print("Database: eduanalytics")
+    print(f"Username: {APP_USER}")
+    print(f"Password: {APP_PASS}")
+    print(f"Database: {DB_NAME}")
     print("Host: localhost")
-    print("Port: 5432")
-    
-except psycopg2.Error as e:
+    print(f"Port: {PORT}")
+
+except pymysql.MySQLError as e:
     print(f" Error: {e}")
-    if "password authentication failed" in str(e):
-        print("\n Trying with empty password...")

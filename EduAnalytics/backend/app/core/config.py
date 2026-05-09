@@ -10,8 +10,11 @@ load_dotenv()
 class Settings(BaseSettings):
     """Application settings"""
     
-    # Database - Use SQLite for development, PostgreSQL for production
-    DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite:///./eduanalytics.db")
+    # Database - default to MySQL (change via .env); SQLite fallback can be used for local dev
+    DATABASE_URL: str = os.getenv(
+        "DATABASE_URL",
+        "mysql+pymysql://eduanalytics_user:SecurePass123!@localhost:3306/eduanalytics",
+    )
     
     # App
     APP_NAME: str = "EduAnalytics API"
