@@ -70,7 +70,7 @@ export default function LandingPage() {
         >
           <h1 className="text-6xl md:text-7xl font-bold text-white mb-6">
             Student Performance
-            <span className="block bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+            <span className="block text-indigo-400">
               Analytics Platform
             </span>
           </h1>

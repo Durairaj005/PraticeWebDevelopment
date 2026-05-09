@@ -5,3 +5,16 @@
 /* Minimal dark theme defaults */
 html, body, #root { height: 100%; }
 body { @apply bg-gray-950 text-white; }
+
+/* Simple theme override: render Tailwind gradients as solid colors */
+.bg-gradient-to-r,
+.bg-gradient-to-l,
+.bg-gradient-to-t,
+.bg-gradient-to-b,
+.bg-gradient-to-tr,
+.bg-gradient-to-tl,
+.bg-gradient-to-br,
+.bg-gradient-to-bl {
+	background-image: none !important;
+	background-color: var(--tw-gradient-from, rgb(79 70 229 / 1)) !important;
+}
