@@ -38,16 +38,15 @@ export default function BatchComparison() {
         if (response.ok) {
           const data = await response.json();
           const batchList = data.batches || [];
-          console.log('Fetched batches:', batchList);
           setBatches(batchList.map((b, i) => ({
             id: b.batch_year || b.id,
             name: `Batch ${b.batch_year || b.id}`
           })));
         } else {
-          console.error('Failed to fetch batches, status:', response.status);
+          // Failed to fetch batches
         }
       } catch (err) {
-        console.error('Failed to fetch batches:', err);
+        // Error fetching batches
       }
     };
 
@@ -66,17 +65,13 @@ export default function BatchComparison() {
         const res1 = await fetch(
           `http://localhost:8000/api/v1/admin/all-students?batch_year=${batch1}`
         );
-        console.log('Batch 1 response status:', res1.status);
-
         // Fetch batch 2 data
         const res2 = await fetch(
           `http://localhost:8000/api/v1/admin/all-students?batch_year=${batch2}`
         );
-        console.log('Batch 2 response status:', res2.status);
 
         if (res1.ok) {
           const data1 = await res1.json();
-          console.log('Batch 1 students:', data1.students);
           const studentsWithMarks = await Promise.all(
             (data1.students || []).map(async (student) => {
               try {
@@ -92,14 +87,12 @@ export default function BatchComparison() {
             })
           );
           setBatch1Data(studentsWithMarks);
-          console.log('Batch 1 data with marks:', studentsWithMarks);
         } else {
-          console.error('Batch 1 fetch failed:', res1.status, res1.statusText);
+          // Batch 1 fetch failed
         }
 
         if (res2.ok) {
           const data2 = await res2.json();
-          console.log('Batch 2 students:', data2.students);
           const studentsWithMarks = await Promise.all(
             (data2.students || []).map(async (student) => {
               try {
@@ -115,12 +108,11 @@ export default function BatchComparison() {
             })
           );
           setBatch2Data(studentsWithMarks);
-          console.log('Batch 2 data with marks:', studentsWithMarks);
         } else {
-          console.error('Batch 2 fetch failed:', res2.status, res2.statusText);
+          // Batch 2 fetch failed
         }
       } catch (err) {
-        console.error('Failed to fetch batch data:', err);
+        // Error fetching batch data
       } finally {
         setLoading(false);
       }
@@ -138,11 +130,9 @@ export default function BatchComparison() {
           allMarks.push(...student.marks);
         }
       });
-      console.log('[Batch1 Marks Debug]', allMarks.slice(0, 3)); // Log first 3 marks
       if (allMarks.length > 0) {
         const dist = calculateMarkDistribution(allMarks);
         const stats = getDistributionStats(allMarks);
-        console.log('[Batch1 Stats]', stats);
         setBatch1Distribution(dist);
         setBatch1Stats(stats);
       }
@@ -155,11 +145,9 @@ export default function BatchComparison() {
           allMarks.push(...student.marks);
         }
       });
-      console.log('[Batch2 Marks Debug]', allMarks.slice(0, 3)); // Log first 3 marks
       if (allMarks.length > 0) {
         const dist = calculateMarkDistribution(allMarks);
         const stats = getDistributionStats(allMarks);
-        console.log('[Batch2 Stats]', stats);
         setBatch2Distribution(dist);
         setBatch2Stats(stats);
       }
@@ -428,7 +416,7 @@ export default function BatchComparison() {
       // Save the PDF
       doc.save(`Batch_Comparison_Report.pdf`);
     } catch (error) {
-      console.error('Error generating PDF:', error);
+      // Error generating PDF
       alert('Error generating PDF report. Please try again.');
     }
   };

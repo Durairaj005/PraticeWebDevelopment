@@ -48,7 +48,7 @@ export default function MyAnalytics() {
           });
         }
       } catch (err) {
-        console.error('Failed to fetch analytics data:', err);
+        // Error fetching analytics data
       } finally {
         setLoading(false);
       }
@@ -120,7 +120,7 @@ export default function MyAnalytics() {
           });
         }
       } catch (err) {
-        console.error('Error fetching marks:', err);
+        // Error fetching marks
       }
     };
     

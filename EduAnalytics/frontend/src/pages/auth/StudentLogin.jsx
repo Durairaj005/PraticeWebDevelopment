@@ -23,12 +23,6 @@ export default function StudentLogin() {
         formattedDob = `${day}-${month}-${year}`;
       }
 
-      console.log('[STUDENT LOGIN] Credentials:', {
-        register_no: registerNo,
-        date_of_birth: formattedDob,
-        original_dob: dob
-      });
-
       // Call backend DOB-based login
       const response = await fetch('http://localhost:8000/api/v1/auth/student/login', {
         method: 'POST',

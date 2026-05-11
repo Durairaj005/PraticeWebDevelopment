@@ -125,13 +125,7 @@ export default function ClassPerformance() {
             
             const totalSubjectGrades = allMarks.length;
             
-            console.log('[ClassPerformance] Calculated gradeStats:', {
-              distribution: gradeDistribution,
-              total: totalSubjectGrades,
-              semPublished,
-              hasSemesterData,
-              allMarks: allMarks.length
-            });
+
             
             setGradeStats({
               distribution: gradeDistribution,
@@ -146,7 +140,7 @@ export default function ClassPerformance() {
           }
         }
       } catch (err) {
-        console.error('Failed to fetch data:', err);
+        // Error fetching data
       } finally {
         setLoading(false);
       }
@@ -179,7 +173,7 @@ export default function ClassPerformance() {
           }
         }
       } catch (err) {
-        console.error('Error fetching student marks:', err);
+        // Error fetching student marks
       }
     };
     
@@ -222,8 +216,7 @@ export default function ClassPerformance() {
     }, {})
     : {};
 
-  console.log('[ClassPerformance] classData:', classData);
-  console.log('[ClassPerformance] classAverageBySubject:', classAverageBySubject);
+
 
   const classAverageData = subjects.length > 0 ? {
     labels: subjects.map(s => s.name),

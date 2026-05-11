@@ -40,7 +40,7 @@ export default function AdminDashboard() {
         setMarkDistributionData(distribution);
         setDistributionStats(getDistributionStats(allMarks));
       } catch (err) {
-        console.error('Error fetching mark distribution:', err);
+        // Error fetching mark distribution
       }
     };
 

@@ -55,7 +55,7 @@ export default function MarksEditDashboard() {
       }
     } catch (err) {
       setError('Failed to fetch batches');
-      console.error(err);
+
     }
   };
 

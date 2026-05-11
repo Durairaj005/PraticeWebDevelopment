@@ -31,33 +31,23 @@ export default function BatchSubjectConfiguration() {
       setError(null);
       const token = localStorage.getItem('token');
 
-      console.log('Token found:', !!token);
-
       if (!token) {
         setError('No authentication token found. Please login first.');
         setLoading(false);
         return;
       }
 
-      console.log('Fetching batches...');
       const batchRes = await fetch('http://localhost:8000/api/v1/admin/batch-subjects/batches', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       
-      console.log('Batch response status:', batchRes.status);
-
       const subjectRes = await fetch('http://localhost:8000/api/v1/admin/batch-subjects/subjects/available', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
 
-      console.log('Subject response status:', subjectRes.status);
-
       if (batchRes.ok && subjectRes.ok) {
         const batchData = await batchRes.json();
         const subjectData = await subjectRes.json();
-        
-        console.log('Batches:', batchData);
-        console.log('Subjects:', subjectData);
         
         setBatches(batchData);
         setAllSubjects(subjectData);
@@ -74,7 +64,6 @@ export default function BatchSubjectConfiguration() {
         let errorMsg = 'Failed to load data';
         try {
           const errorData = await batchRes.json();
-          console.log('Error response:', errorData);
           errorMsg = errorData.detail || errorMsg;
         } catch (e) {
           errorMsg = `Server error: ${batchRes.status} ${batchRes.statusText}`;
@@ -82,7 +71,6 @@ export default function BatchSubjectConfiguration() {
         setError(errorMsg);
       }
     } catch (err) {
-      console.error('Error fetching data:', err);
       setError(`Error: ${err.message || 'Unknown error'}`);
     } finally {
       setLoading(false);
@@ -117,7 +105,6 @@ export default function BatchSubjectConfiguration() {
         setError(data.detail || 'Failed to add subject');
       }
     } catch (err) {
-      console.error('Error adding subject:', err);
       setError('Error adding subject');
     }
   };
@@ -144,7 +131,6 @@ export default function BatchSubjectConfiguration() {
         setError('Failed to remove subject');
       }
     } catch (err) {
-      console.error('Error removing subject:', err);
       setError('Error removing subject');
     }
   };
@@ -178,7 +164,6 @@ export default function BatchSubjectConfiguration() {
         setError(data.detail || 'Failed to create subject');
       }
     } catch (err) {
-      console.error('Error creating subject:', err);
       setError('Error creating subject');
     }
   };
@@ -213,7 +198,6 @@ export default function BatchSubjectConfiguration() {
         setError(data.detail || 'Failed to update subject');
       }
     } catch (err) {
-      console.error('Error updating subject:', err);
       setError('Error updating subject');
     }
   };

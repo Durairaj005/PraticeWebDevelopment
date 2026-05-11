@@ -51,7 +51,6 @@ export default function AdminLogin() {
       navigate('/admin/dashboard');
       
     } catch (err) {
-      console.error('Login failed:', err);
       setError(err.message || 'Failed to sign in with Google. Please try again.');
     } finally {
       setLoading(false);

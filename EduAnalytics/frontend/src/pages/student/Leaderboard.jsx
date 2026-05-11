@@ -19,51 +19,42 @@ export default function Leaderboard() {
         const token = localStorage.getItem('token');
         
         if (!token) {
-          console.error('No token found');
           setLoading(false);
           return;
         }
 
         // First, get the current student's information to determine their batch
-        console.log('Fetching current student batch info...');
         const studentRes = await fetch(
           `http://localhost:8000/api/v1/student/dashboard`,
           { headers: { 'Authorization': `Bearer ${token}` } }
         );
 
         if (!studentRes.ok) {
-          console.error('Failed to fetch student info - status:', studentRes.status);
           setLoading(false);
           return;
         }
 
         const studentData = await studentRes.json();
         const studentBatchYear = studentData.batch_year;
-        console.log('Current student batch:', studentBatchYear);
         setStudentBatch(studentBatchYear);
         
         // Check if semester is published
         setSemesterPublished(studentData.sem_published || false);
 
         // Now fetch all students from the same batch
-        console.log('Fetching leaderboard for batch:', studentBatchYear);
-        
         const response = await fetch(
           `http://localhost:8000/api/v1/admin/all-students?batch_year=${studentBatchYear}`,
           { headers: { 'Authorization': `Bearer ${token}` } }
         );
 
         if (!response.ok) {
-          console.error('Failed to fetch students - status:', response.status);
           setLoading(false);
           return;
         }
 
         const data = await response.json();
-        console.log('Students fetched from batch', studentBatchYear + ':', data.total);
         
         if (!data.students || data.students.length === 0) {
-          console.log('No students found for batch', studentBatchYear);
           setTopStudents([]);
           setLoading(false);
           return;
@@ -80,7 +71,6 @@ export default function Leaderboard() {
               
               if (marksRes.ok) {
                 const marksData = await marksRes.json();
-                console.log(`Marks for ${student.name}:`, marksData.marks?.length || 0, 'subjects');
                 
                 if (marksData.marks && marksData.marks.length > 0) {
                   const marks = marksData.marks;
@@ -139,7 +129,6 @@ export default function Leaderboard() {
                 hasSemesterMarks: false
               };
             } catch (err) {
-              console.error(`Error fetching marks for student ${student.student_id}:`, err);
               return {
                 ...student,
                 name: student.name,
@@ -152,8 +141,6 @@ export default function Leaderboard() {
           })
         );
         
-        console.log('Students with data:', studentsWithData.length);
-        
         // Sort by CA average (descending) and take top 10
         const sortedCA = studentsWithData
           .sort((a, b) => b.caAverage - a.caAverage)
@@ -165,13 +152,9 @@ export default function Leaderboard() {
           .sort((a, b) => b.semesterAverage - a.semesterAverage)
           .slice(0, 10);
         
-        console.log('Top CA students from batch', studentBatchYear + ':', sortedCA.length);
-        console.log('Top Semester students from batch', studentBatchYear + ':', sortedSemester.length);
-        
         setTopStudents(sortedCA);
         setSemesterTopStudents(sortedSemester);
       } catch (err) {
-        console.error('Failed to fetch leaderboard:', err);
         setTopStudents([]);
         setSemesterTopStudents([]);
       } finally {
