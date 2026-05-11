@@ -199,7 +199,6 @@ async def upload_csv(
     CA Pass Requirement: Average of CA marks >= 30 out of 60
     """
     logger = __import__('logging').getLogger(__name__)
-    logger.info(f"📤 CSV UPLOAD STARTED: {file.filename} by admin {admin.id}")
     try:
         contents = await file.read()
         csv_reader = csv.DictReader(io.StringIO(contents.decode('utf-8')))
@@ -327,7 +326,6 @@ async def upload_csv(
                 success_count += 1
                 
             except Exception as e:
-                print(f"[UPLOAD ERROR] Row {row_num}: {type(e).__name__}: {str(e)}")
                 error_messages.append(f"Row {row_num}: {str(e)}")
         
         # CRITICAL FIX: Ensure all pending changes are flushed before commit
@@ -523,9 +521,6 @@ async def get_student_marks_for_edit(
             ]
         }
     except Exception as e:
-        import traceback
-        print(f"Error in get_student_marks_for_edit: {str(e)}")
-        traceback.print_exc()
         raise HTTPException(status_code=500, detail=f"Error fetching marks: {str(e)}")
 
 @router.put("/marks/{mark_id}")

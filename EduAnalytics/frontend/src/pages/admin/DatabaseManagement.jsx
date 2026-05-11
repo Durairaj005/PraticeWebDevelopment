@@ -39,7 +39,6 @@ export default function DatabaseManagement() {
     try {
       const token = authToken || localStorage.getItem('token');
       if (!token) {
-        console.warn('No auth token available');
         return;
       }
 
@@ -61,15 +60,14 @@ export default function DatabaseManagement() {
             totalMarks += studentCount > 0 ? studentCount * 5 : 0; // 5 subjects
           }
         } catch (err) {
-          console.error(`Error checking batch ${batchYear}:`, err);
+          // Error checking batch
         }
       }
       
-      console.log(`[Data Status] Total Students: ${totalStudents}, Total Marks: ${totalMarks}`);
       setDataCount({ students: totalStudents, marks: totalMarks });
       setLiveDataStatus(totalStudents > 0 ? 'live' : 'empty');
     } catch (error) {
-      console.error('Error checking data status:', error);
+      // Error checking data status
       setLiveDataStatus('error');
     }
   };
@@ -149,13 +147,7 @@ export default function DatabaseManagement() {
       const storageToken = localStorage.getItem('token');
       const token = contextToken || storageToken;
       
-      console.log('🔍 Token Debug:');
-      console.log('  Context Token:', contextToken ? contextToken.substring(0, 30) + '...' : 'NULL');
-      console.log('  Storage Token:', storageToken ? storageToken.substring(0, 30) + '...' : 'NULL');
-      console.log('  Using Token:', token ? token.substring(0, 30) + '...' : 'NULL');
-      
       if (!token) {
-        console.error('❌ NO TOKEN FOUND');
         setParseErrorPresent('❌ No authentication token. Please log in using Google OAuth first.');
         setUploadingPresent(false);
         return;
@@ -169,12 +161,6 @@ export default function DatabaseManagement() {
         'Authorization': `Bearer ${token}`
       };
 
-      console.log('🔐 Sending request with headers:', {
-        Authorization: `Bearer ${token.substring(0, 30)}...`,
-        method: 'POST',
-        endpoint: 'http://localhost:8000/api/v1/admin/csv-upload'
-      });
-
       const response = await fetch('http://localhost:8000/api/v1/admin/csv-upload', {
         method: 'POST',
         headers: headers,
@@ -182,7 +168,6 @@ export default function DatabaseManagement() {
       });
 
       if (response.ok) {
-        console.log('✅ Upload successful!');
         setUploadingPresent(false);
         setUploadSuccessPresent(true);
         setFilePresent(null);
@@ -194,13 +179,10 @@ export default function DatabaseManagement() {
         }, 3000);
       } else {
         const errorData = await response.json();
-        console.error('❌ Upload failed with status:', response.status);
-        console.error('Error response:', errorData);
         setParseErrorPresent(`Error (${response.status}): ${errorData.detail || 'Upload failed'}`);
         setUploadingPresent(false);
       }
     } catch (error) {
-      console.error('❌ Request error:', error);
       setUploadingPresent(false);
       setParseErrorPresent('Upload failed: ' + error.message);
     }
@@ -247,13 +229,7 @@ export default function DatabaseManagement() {
       const storageToken = localStorage.getItem('token');
       const token = contextToken || storageToken;
       
-      console.log('🔍 Token Debug:');
-      console.log('  Context Token:', contextToken ? contextToken.substring(0, 30) + '...' : 'NULL');
-      console.log('  Storage Token:', storageToken ? storageToken.substring(0, 30) + '...' : 'NULL');
-      console.log('  Using Token:', token ? token.substring(0, 30) + '...' : 'NULL');
-      
       if (!token) {
-        console.error('❌ NO TOKEN FOUND');
         setParseErrorPast('❌ No authentication token. Please log in using Google OAuth first.');
         setUploadingPast(false);
         return;
@@ -267,12 +243,6 @@ export default function DatabaseManagement() {
         'Authorization': `Bearer ${token}`
       };
 
-      console.log('🔐 Sending request with headers:', {
-        Authorization: `Bearer ${token.substring(0, 30)}...`,
-        method: 'POST',
-        endpoint: 'http://localhost:8000/api/v1/admin/csv-upload'
-      });
-
       const response = await fetch('http://localhost:8000/api/v1/admin/csv-upload', {
         method: 'POST',
         headers: headers,
@@ -280,7 +250,6 @@ export default function DatabaseManagement() {
       });
 
       if (response.ok) {
-        console.log('✅ Upload successful!');
         setUploadingPast(false);
         setUploadSuccessPast(true);
         setFilePast(null);
@@ -292,13 +261,10 @@ export default function DatabaseManagement() {
         }, 3000);
       } else {
         const errorData = await response.json();
-        console.error('❌ Upload failed with status:', response.status);
-        console.error('Error response:', errorData);
         setParseErrorPast(`Error (${response.status}): ${errorData.detail || 'Upload failed'}`);
         setUploadingPast(false);
       }
     } catch (error) {
-      console.error('❌ Request error:', error);
       setUploadingPast(false);
       setParseErrorPast('Upload failed: ' + error.message);
     }

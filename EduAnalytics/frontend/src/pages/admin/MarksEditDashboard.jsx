@@ -72,7 +72,6 @@ export default function MarksEditDashboard() {
       setMarks([]);
     } catch (err) {
       setError('Failed to fetch students');
-      console.error(err);
     } finally {
       setLoading(false);
     }
@@ -89,7 +88,6 @@ export default function MarksEditDashboard() {
       setMarks(data.marks || []);
     } catch (err) {
       setError('Failed to fetch marks');
-      console.error(err);
     } finally {
       setLoading(false);
     }
@@ -160,7 +158,6 @@ export default function MarksEditDashboard() {
       }
     } catch (err) {
       setError('Failed to save mark: ' + err.message);
-      console.error(err);
     } finally {
       setLoading(false);
     }
@@ -250,7 +247,6 @@ export default function MarksEditDashboard() {
       setTimeout(() => setSaveSuccess(false), 3000);
     } catch (err) {
       setError('Failed to add subject: ' + err.message);
-      console.error(err);
     } finally {
       setLoading(false);
     }
@@ -285,7 +281,6 @@ export default function MarksEditDashboard() {
           );
           
           if (!studentMarksRes.ok) {
-            console.error(`Failed to fetch marks for student ${student.student_id}`);
             return;
           }
 
@@ -303,11 +298,11 @@ export default function MarksEditDashboard() {
             );
 
             if (!deleteRes.ok) {
-              console.error(`Failed to delete mark ${markToDelete.mark_id} for student ${student.student_id}`);
+              // Failed to delete mark
             }
           }
         } catch (err) {
-          console.error(`Error deleting subject for student ${student.student_id}:`, err);
+          // Error deleting subject for student
         }
       });
 
@@ -328,7 +323,6 @@ export default function MarksEditDashboard() {
       }, 4000);
     } catch (err) {
       setError('Failed to delete subject: ' + err.message);
-      console.error(err);
     } finally {
       setLoading(false);
     }

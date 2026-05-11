@@ -40,22 +40,15 @@ def authenticate_student(db: Session, register_no: str, dob: str):
     student = db.query(Student).filter(Student.register_no == register_no).first()
     
     if not student:
-        print(f"[AUTH DEBUG] Student not found: {register_no}")
         return None
     
     # Simple direct string comparison - both should be DD-MM-YYYY
     student_dob = (student.date_of_birth or "").strip()
     dob_input = (dob or "").strip()
     
-    print(f"[AUTH DEBUG] Comparing:")
-    print(f"  Input DOB: '{dob_input}' (len={len(dob_input)})")
-    print(f"  DB DOB:    '{student_dob}' (len={len(student_dob)})")
-    
     if student_dob == dob_input:
-        print(f"[AUTH DEBUG] ✓ Authentication successful for {register_no}")
         return student
     
-    print(f"[AUTH DEBUG] ✗ DOB mismatch for {register_no}")
     return None
 
 def create_student_token(student_id: int, register_no: str) -> str:
@@ -85,7 +78,6 @@ def verify_google_token(id_token: str) -> Optional[dict]:
     if not FIREBASE_ENABLED:
         # For development: return mock data if Firebase is not configured
         # In production, you should raise an error here
-        print("⚠️ Warning: Firebase is not configured. Using mock authentication.")
         return {
             "uid": "mock-uid-12345",
             "email": "test@example.com",
@@ -107,5 +99,4 @@ def verify_google_token(id_token: str) -> Optional[dict]:
         
         return user_info
     except Exception as e:
-        print(f"Firebase token verification failed: {e}")
         return None

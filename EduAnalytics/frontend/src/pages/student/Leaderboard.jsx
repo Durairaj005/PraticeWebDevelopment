@@ -106,8 +106,6 @@ export default function Leaderboard() {
                     // Calculate Semester average if available
                     const semesterAverage = semesterSubjectCount > 0 ? totalSemesterAvg / semesterSubjectCount : 0;
                     
-                    console.log(`${student.name}: CA Average=${caAverage.toFixed(2)}, Semester=${semesterAverage.toFixed(2)}`);
-                    
                     return {
                       ...student,
                       name: student.name,

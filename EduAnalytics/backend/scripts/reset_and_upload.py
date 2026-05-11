@@ -10,12 +10,10 @@ from pathlib import Path
 db_path = Path(__file__).parent / "eduanalytics.db"
 if db_path.exists():
     os.remove(db_path)
-    print(f"✓ Deleted old database: {db_path}")
 
 # Create fresh schema
 from app.db import Base, engine
 Base.metadata.create_all(bind=engine)
-print("✓ Database schema created")
 
 # Initialize batches, semesters, subjects, and admin
 from app.db import SessionLocal

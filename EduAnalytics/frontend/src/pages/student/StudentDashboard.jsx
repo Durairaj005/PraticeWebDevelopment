@@ -56,9 +56,6 @@ export default function StudentDashboard() {
 
         const dashData = await dashResponse.json();
         
-        console.log('[StudentDashboard] dashData from backend:', dashData);
-        console.log('[StudentDashboard] sem_published value:', dashData?.sem_published);
-
         // Fetch student marks
         const marksResponse = await fetch(
           'http://localhost:8000/api/v1/student/marks',
@@ -162,10 +159,8 @@ export default function StudentDashboard() {
         });
 
         setSubjects(subjectsArray);
-        console.log('[StudentDashboard] subjectsArray set:', subjectsArray);
         setError(null);
       } catch (err) {
-        console.error('Error fetching student data:', err);
         setError(`Error loading data: ${err.message}`);
       } finally {
         setLoading(false);
@@ -181,7 +176,6 @@ export default function StudentDashboard() {
       try {
         const token = localStorage.getItem('token');
         if (!token) {
-          console.warn('No token available for class stats');
           return;
         }
 
@@ -211,17 +205,10 @@ export default function StudentDashboard() {
               allMarks = [...allMarks, ...marksData.marks];
             }
           } catch (err) {
-            console.error(`Error fetching marks for student ${student.student_id}:`, err);
+            // Error fetching marks for student
           }
         }
-
-        // Debug: Log collected marks
-        console.log('[CLASS STATS DEBUG] All marks collected:', allMarks);
-        console.log('[CLASS STATS DEBUG] Number of marks:', allMarks.length);
-        if (allMarks.length > 0) {
-          console.log('[CLASS STATS DEBUG] Sample mark:', allMarks[0]);
-        }
-
+        
         // Calculate class insights (average per student and total students)
         let allStudentAverages = [];
         const studentMarksMap = {};
@@ -257,11 +244,10 @@ export default function StudentDashboard() {
           const distribution = calculateMarkDistribution(allMarks);
           setClassMarkDistribution(distribution);
           const stats = getDistributionStats(allMarks);
-          console.log('[CLASS STATS DEBUG] Calculated stats:', stats);
           setClassDistributionStats(stats);
         }
       } catch (err) {
-        console.error('Error fetching class distribution:', err);
+        // Error fetching class distribution
       }
     };
 
@@ -483,7 +469,7 @@ export default function StudentDashboard() {
       
       doc.save(`${studentData.registerNo}_Performance_Report.pdf`);
     } catch (error) {
-      console.error('Error generating PDF:', error);
+      // Error generating PDF
       alert('Error generating PDF report. Please try again.');
     }
   };

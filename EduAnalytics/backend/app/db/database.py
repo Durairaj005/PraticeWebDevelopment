@@ -42,7 +42,6 @@ SessionLocal = sessionmaker(
 def init_db():
     """Initialize database - create all tables"""
     Base.metadata.create_all(bind=engine)
-    logger.info("✅ Database initialized successfully")
 
 
 def get_db():

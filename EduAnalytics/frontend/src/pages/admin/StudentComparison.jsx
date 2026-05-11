@@ -47,7 +47,7 @@ export default function StudentComparison() {
           setSelectedBatch('');
         }
       } catch (err) {
-        console.error('Failed to fetch batches:', err);
+        // Error fetching batches
       }
     };
 
@@ -81,7 +81,7 @@ export default function StudentComparison() {
           }
         }
       } catch (err) {
-        console.error('Failed to fetch students:', err);
+        // Error fetching students
       }
     };
 
@@ -96,28 +96,20 @@ export default function StudentComparison() {
       try {
         const token = localStorage.getItem('token');
         if (!token) {
-          console.error('No token found');
           return;
         }
 
-        console.log(`Fetching marks for student: ${studentId}`);
-        
         const response = await fetch(
           `http://localhost:8000/api/v1/admin/students/${studentId}/marks`,
           { headers: { 'Authorization': `Bearer ${token}` } }
         );
 
-        console.log(`Response status: ${response.status}, Student ID: ${studentId}`);
-
         if (response.ok) {
           const data = await response.json();
-          console.log(`Marks data received:`, data);
           
           const student = students.find(s => s.student_id === parseInt(studentId) || s.student_id === studentId);
-          console.log(`Student found:`, student);
           
           const marks = data.marks || [];
-          console.log(`Marks array:`, marks);
           
           const subjects = marks.map(m => ({
             name: m.subject_name,
@@ -131,8 +123,6 @@ export default function StudentComparison() {
             ? Math.round(subjects.reduce((sum, s) => sum + (s.ca1 + s.ca2 + s.ca3 + s.semester) / 4, 0) / subjects.length)
             : 0;
 
-          console.log(`Setting data for student with ${subjects.length} subjects, avg: ${avgScore}`);
-
           setData({
             name: student?.name || 'Student',
             regNo: student?.register_no || studentId,
@@ -142,10 +132,10 @@ export default function StudentComparison() {
           });
         } else {
           const errorText = await response.text();
-          console.error(`Failed to fetch marks, status: ${response.status}, error: ${errorText}`);
+          // Failed to fetch marks
         }
       } catch (err) {
-        console.error('Failed to fetch student marks:', err);
+        // Error fetching student marks
       }
     };
 
@@ -155,7 +145,6 @@ export default function StudentComparison() {
       fetchStudentMarks(student2, setStudent2Data)
     ]).finally(() => {
       setLoading(false);
-      console.log('Done loading student data');
     });
   }, [showComparison, student1, student2, students]);
 
@@ -170,7 +159,6 @@ export default function StudentComparison() {
       }));
       const dist = calculateMarkDistribution(marks);
       const stats = getDistributionStats(marks);
-      console.log('[Student1 Stats]', stats);
       setStudent1Distribution(dist);
       setStudent1Stats(stats);
     }
@@ -184,7 +172,6 @@ export default function StudentComparison() {
       }));
       const dist = calculateMarkDistribution(marks);
       const stats = getDistributionStats(marks);
-      console.log('[Student2 Stats]', stats);
       setStudent2Distribution(dist);
       setStudent2Stats(stats);
     }
@@ -433,7 +420,7 @@ export default function StudentComparison() {
       // Save the PDF
       doc.save(`Student_Comparison_Report.pdf`);
     } catch (error) {
-      console.error('Error generating PDF:', error);
+      // Error generating PDF
       alert('Error generating PDF report. Please try again.');
     }
   };
