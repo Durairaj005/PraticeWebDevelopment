@@ -1,0 +1,67 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+venv/
+env/
+.venv/
+ENV/
+
+# Environment variables (secrets)
+.env
+*.env
+
+# SQLite database
+*.db
+*.sqlite
+*.sqlite3
+
+# Firebase credentials
+firebase-admin.json
+firebase-credentials.json
+*.json.key
+
+# Debug / temp scripts
+backend/debug_*.py
+backend/run_audit.py
+backend/check_*.py
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Vite build output
+frontend/dist/
+frontend/.vite/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+logs/
+
+# Alembic (keep structure, ignore compiled)
+backend/alembic/versions/*.pyc
+
+# Cloudinary / upload temp
+uploads/
+temp/
